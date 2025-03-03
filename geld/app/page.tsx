@@ -1,9 +1,13 @@
-export default function Home() {
+import ItemList from "./components/ItemList";
+
+export default async function Home() {
   return (
     <main>
       <h1 className="text-center p-5 text-5xl font-bold">
         GELD: Your AI powered financial helper!
       </h1>
+
+      <ItemList />
     </main>
   );
 }
