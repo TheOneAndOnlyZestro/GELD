@@ -1,4 +1,9 @@
+import AddButton from "./components/AddButton/AddButton";
+import ItemCreator from "./components/ItemCreator/ItemCreator";
+import Overlay from "./components/ItemCreator/Overlay";
 import ItemList from "./components/ItemList";
+import ItemListClient from "./components/ItemListClient";
+import ItemListClientContainer from "./components/ItemListClientContainer";
 
 export default async function Home() {
   return (
@@ -8,6 +13,9 @@ export default async function Home() {
       </h1>
 
       <ItemList />
+      <Overlay />
+      <ItemCreator />
+      <AddButton />
     </main>
   );
 }

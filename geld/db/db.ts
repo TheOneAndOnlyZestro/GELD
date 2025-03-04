@@ -2,7 +2,7 @@ import { Pool } from "pg";
 const pool: Pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 export interface item {
-  id: number;
+  id?: number;
   name: string;
   category: string;
   price: number;

@@ -1,13 +1,14 @@
-import React from "react";
-import { query, item } from "@/db/db";
-const ItemList = async () => {
-  const items: item[] = await query("SELECT * FROM items");
+"use client";
+import React, { use, useEffect, useState } from "react";
+import { item } from "@/db/db";
+const ItemListClient = ({ props }: { props: Promise<item[]> }) => {
+  const items: item[] = use(props);
   return (
     <div>
       {items.map((i) => (
         <div
           key={i.id}
-          className="flex border-2 rounded-2xl p-2 m-5 items-center"
+          className="flex border-2 rounded-2xl p-2 m-2 items-center"
         >
           <div className="flex-2 p-3 bg-sky-300 text-3xl rounded-2xl m-1">
             <span className="font-bold">name: </span>
@@ -33,4 +34,4 @@ const ItemList = async () => {
   );
 };
 
-export default ItemList;
+export default ItemListClient;
