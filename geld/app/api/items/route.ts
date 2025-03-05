@@ -28,9 +28,15 @@ export async function GET() {
     });
   }
 }
-
+async function insert(obj: item) {
+  await query(`INSERT INTO items (name, category, price, store, date)
+    VALUES ( '${obj.name}', '${obj.category}', ${obj.price}, '${obj.store}', '${obj.date}')`);
+}
 export async function POST(request: Request) {
   const res = await request.json();
+  const body: item = res.data;
+  await insert(body);
+
   return new NextResponse(JSON.stringify({ returned: res }), {
     status: 201,
     headers: {
