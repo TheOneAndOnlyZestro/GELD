@@ -10,11 +10,27 @@ const ItemCreator = () => {
   const toggleShow = useShowItemCreatorStore((state) => state.toggleShow);
 
   const currentItem: item = useItemCreatorStore((state) => state.currentItem);
+
   const setItemName = useItemCreatorStore((state) => state.setItemName);
   const setItemCategory = useItemCreatorStore((state) => state.setItemCategory);
   const setItemPrice = useItemCreatorStore((state) => state.setItemPrice);
   const setItemStore = useItemCreatorStore((state) => state.setItemStore);
   const setItemDate = useItemCreatorStore((state) => state.setItemDate);
+
+  const itemSubmission = async (e: any) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:3000/api/items", {
+        method: "POST",
+        body: JSON.stringify({ data: currentItem }),
+      });
+      const actual = await res.json();
+    } catch (err) {
+      console.log(
+        `An error has occured making a POST request, ERROR -> ${err}`
+      );
+    }
+  };
   return (
     <>
       {show && (
@@ -23,12 +39,13 @@ const ItemCreator = () => {
          absolute
          top-1/2 left-1/2 -translate-1/2
          w-3/4
-         h-2/3
+         h-7/10
          p-5
          bg-amber-300
          rounded-2xl
          border-2
          transition duration-200
+         overflow-auto
          `}
         >
           <IoMdCloseCircle className="flex-1 w-10 h-10" onClick={toggleShow} />
@@ -72,6 +89,18 @@ const ItemCreator = () => {
               onChangeFunc={setItemDate}
               inputType="date"
             />
+            <span className="w-full flex justify-center">
+              <button
+                className="w-1/3 text-center p-2 bg-amber-500
+              rounded-xl
+              font-black
+              border-2"
+                type="submit"
+                onClick={(e) => itemSubmission(e)}
+              >
+                Add Button
+              </button>
+            </span>
           </form>
         </div>
       )}
