@@ -2,9 +2,19 @@
 import React from "react";
 import { useShowItemCreatorStore } from "../AddButton/AddButtonStore";
 import { IoMdCloseCircle } from "react-icons/io";
+import InputField from "./InputField";
+import { item } from "@/db/db";
+import { useItemCreatorStore } from "./ItemCreatorStore";
 const ItemCreator = () => {
   const show: boolean = useShowItemCreatorStore((state) => state.show);
   const toggleShow = useShowItemCreatorStore((state) => state.toggleShow);
+
+  const currentItem: item = useItemCreatorStore((state) => state.currentItem);
+  const setItemName = useItemCreatorStore((state) => state.setItemName);
+  const setItemCategory = useItemCreatorStore((state) => state.setItemCategory);
+  const setItemPrice = useItemCreatorStore((state) => state.setItemPrice);
+  const setItemStore = useItemCreatorStore((state) => state.setItemStore);
+  const setItemDate = useItemCreatorStore((state) => state.setItemDate);
   return (
     <>
       {show && (
@@ -13,7 +23,7 @@ const ItemCreator = () => {
          absolute
          top-1/2 left-1/2 -translate-1/2
          w-3/4
-         h-3/5
+         h-2/3
          p-5
          bg-amber-300
          rounded-2xl
@@ -21,37 +31,46 @@ const ItemCreator = () => {
          transition duration-200
          `}
         >
-          <IoMdCloseCircle className="w-10 h-10" onClick={toggleShow} />
+          <IoMdCloseCircle className="flex-1 w-10 h-10" onClick={toggleShow} />
+          <h1 className="flex-2 w-full font-black text-5xl">Add New Item</h1>
+
           <form className="flex flex-col items-start">
-            <label className="flex-1 text-2xl font-black">Name:</label>
-            <input
-              type="text"
-              placeholder="Please enter name...."
-              className="flex-1 mb-3 text-3xl p-5 w-full 
-              rounded-2xl border-2
-            bg-amber-200
-              outline-none
-            focus:bg-amber-400"
+            <InputField
+              label="Name"
+              placeholder="Please enter Name"
+              infoValue={currentItem.name}
+              onChangeFunc={setItemName}
+              inputType="text"
             />
-            <label className="flex-1 text-2xl font-black">category:</label>
-            <input
-              type="text"
-              placeholder="Please enter category...."
-              className="flex-1 mb-3 text-3xl p-5 w-full 
-              rounded-2xl border-2
-            bg-amber-200
-              outline-none
-            focus:bg-amber-400"
+
+            <InputField
+              label="Category"
+              placeholder="Please enter category"
+              infoValue={currentItem.category}
+              onChangeFunc={setItemCategory}
+              inputType="text"
             />
-            <label className="flex-1 text-2xl font-black">price:</label>
-            <input
-              type="text"
-              placeholder="Please enter price...."
-              className="flex-1 mb-3 text-3xl p-5 w-full 
-              rounded-2xl border-2
-            bg-amber-200
-              outline-none
-            focus:bg-amber-400"
+
+            <InputField
+              label="Price"
+              placeholder="Please enter Price"
+              infoValue={currentItem.price}
+              onChangeFunc={setItemPrice}
+              inputType="text"
+            />
+            <InputField
+              label="Store"
+              placeholder="Please enter store"
+              infoValue={currentItem.store}
+              onChangeFunc={setItemStore}
+              inputType="text"
+            />
+            <InputField
+              label="Date"
+              placeholder="Please enter date"
+              infoValue={currentItem.date}
+              onChangeFunc={setItemDate}
+              inputType="date"
             />
           </form>
         </div>

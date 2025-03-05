@@ -6,6 +6,8 @@ export interface item {
   name: string;
   category: string;
   price: number;
+  store: string;
+  date: string;
 }
 export const query = async (text: string): Promise<item[]> => {
   try {
