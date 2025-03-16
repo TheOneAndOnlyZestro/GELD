@@ -1,5 +1,7 @@
+import Item from "@/app/components/Item";
 import { item, query } from "@/db/db";
 import { NextResponse } from "next/server";
+import { json } from "stream/consumers";
 
 export async function OPTIONS() {
   return new NextResponse(JSON.stringify({}), {
@@ -40,6 +42,8 @@ async function update(obj: item) {
      WHERE id=${obj.id}`);
   return results;
 }
+
+async function deleteItem(id: number) {}
 export async function POST(request: Request) {
   try {
     const res = await request.json();
@@ -66,6 +70,12 @@ export async function UPDATE(request: Request) {
   try {
     const res = await request.json();
     const body: item = res.data;
+    if (!body.id) {
+      return new NextResponse(
+        JSON.stringify({ msg: "ERROR: ID FIELD IS MISSING!!!" }),
+        { status: 400 }
+      );
+    }
     const result = await update(body);
     return new NextResponse(JSON.stringify({ returned: res }), {
       status: 201,
@@ -76,6 +86,32 @@ export async function UPDATE(request: Request) {
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
+  } catch (err) {
+    return new NextResponse(
+      JSON.stringify({ msg: "Error Ocurred at endpoint", error: err }),
+      { status: 500 }
+    );
+  }
+}
+export async function DELETE(request: Request) {
+  try {
+    const res = await request.json();
+    const body: number = res.id;
+
+    const result = await deleteItem(body);
+
+    return new NextResponse(
+      JSON.stringify({ msg: `Item with ID:${body} was removed from database` }),
+      {
+        status: 201,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      }
+    );
   } catch (err) {
     return new NextResponse(
       JSON.stringify({ msg: "Error Ocurred at endpoint", error: err }),
