@@ -48,7 +48,10 @@ async function update(obj: item) {
   }
 }
 
-async function deleteItem(id: number) {}
+async function deleteItem(id: number) {
+  const results = await query(`DELETE FROM items WHERE id=${id}`);
+  return results;
+}
 export async function POST(request: Request) {
   try {
     const res = await request.json();
