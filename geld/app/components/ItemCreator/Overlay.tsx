@@ -11,7 +11,7 @@ const Overlay = () => {
           className="
          w-screen
          h-screen
-         absolute
+         fixed
          p-0
          m-0
          top-1/2

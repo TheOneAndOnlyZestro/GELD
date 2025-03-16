@@ -1,7 +1,5 @@
-import Item from "@/app/components/Item";
 import { item, query } from "@/db/db";
 import { NextResponse } from "next/server";
-import { json } from "stream/consumers";
 
 export async function OPTIONS() {
   return new NextResponse(JSON.stringify({}), {
@@ -14,6 +12,7 @@ export async function OPTIONS() {
     },
   });
 }
+
 export async function GET() {
   try {
     const items: item[] = await query("SELECT * FROM items");

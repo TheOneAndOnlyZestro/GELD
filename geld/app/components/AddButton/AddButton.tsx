@@ -2,11 +2,15 @@
 import React from "react";
 import { IoIosAdd } from "react-icons/io";
 import { useShowItemCreatorStore } from "./AddButtonStore";
+import { useItemCreatorStore } from "../ItemCreator/ItemCreatorStore";
 const AddButton = () => {
   const show = useShowItemCreatorStore((state) => state.show);
   const toggleShow = useShowItemCreatorStore((state) => state.toggleShow);
 
+  const setModeCreate = useItemCreatorStore((state) => state.setModeCreate);
+
   const showItemCreator = () => {
+    setModeCreate();
     toggleShow();
   };
   return (
@@ -17,7 +21,7 @@ const AddButton = () => {
     justify-center 
     items-center 
     rounded-full
-    absolute
+    fixed
     bottom-0
     right-0
     m-5
