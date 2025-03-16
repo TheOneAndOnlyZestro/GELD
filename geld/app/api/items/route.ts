@@ -37,10 +37,15 @@ async function insert(obj: item) {
   return results;
 }
 async function update(obj: item) {
-  const results = await query(`UPDATE items SET 
-     name='${obj.name}', 'category=${obj.category}', price=${obj.price}, store='${obj.store}', date='${obj.date}')
-     WHERE id=${obj.id}`);
-  return results;
+  try {
+    const results = await query(`UPDATE items SET 
+     name='${obj.name}', category='${obj.category}', price=${obj.price}, store='${obj.store}', date='${obj.date}'
+     WHERE id=${obj.id};`);
+    return results;
+  } catch (err) {
+    console.log("SQL ERROR!!");
+    return `SQL ERROR OCCURRED: ${err}`;
+  }
 }
 
 async function deleteItem(id: number) {}
@@ -66,7 +71,7 @@ export async function POST(request: Request) {
     );
   }
 }
-export async function UPDATE(request: Request) {
+export async function PUT(request: Request) {
   try {
     const res = await request.json();
     const body: item = res.data;
@@ -88,7 +93,10 @@ export async function UPDATE(request: Request) {
     });
   } catch (err) {
     return new NextResponse(
-      JSON.stringify({ msg: "Error Ocurred at endpoint", error: err }),
+      JSON.stringify({
+        msg: "Error Ocurred at endpoint in update",
+        error: err,
+      }),
       { status: 500 }
     );
   }
