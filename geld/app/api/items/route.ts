@@ -34,12 +34,39 @@ async function insert(obj: item) {
     VALUES ( '${obj.name}', '${obj.category}', ${obj.price}, '${obj.store}', '${obj.date}')`);
   return results;
 }
+async function update(obj: item) {
+  const results = await query(`UPDATE items SET 
+     name='${obj.name}', 'category=${obj.category}', price=${obj.price}, store='${obj.store}', date='${obj.date}')
+     WHERE id=${obj.id}`);
+  return results;
+}
 export async function POST(request: Request) {
   try {
     const res = await request.json();
     const body: item = res.data;
     const result = await insert(body);
 
+    return new NextResponse(JSON.stringify({ returned: res }), {
+      status: 201,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
+  } catch (err) {
+    return new NextResponse(
+      JSON.stringify({ msg: "Error Ocurred at endpoint", error: err }),
+      { status: 500 }
+    );
+  }
+}
+export async function UPDATE(request: Request) {
+  try {
+    const res = await request.json();
+    const body: item = res.data;
+    const result = await update(body);
     return new NextResponse(JSON.stringify({ returned: res }), {
       status: 201,
       headers: {
