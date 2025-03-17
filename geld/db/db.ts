@@ -17,3 +17,12 @@ export const query = async (text: string): Promise<item[]> => {
     throw err;
   }
 };
+
+export const getCount = async (): Promise<number> => {
+  try {
+    const results = await pool.query("SELECT COUNT(*) FROM items;");
+    return results.rows[0];
+  } catch (err) {
+    throw err;
+  }
+};

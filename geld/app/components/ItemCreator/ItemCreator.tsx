@@ -5,6 +5,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import InputField from "./InputField";
 import { item } from "@/db/db";
 import { mode, useItemCreatorStore } from "./ItemCreatorStore";
+//import { useRefresh } from "../RefreshStore";
 const ItemCreator = () => {
   const show: boolean = useShowItemCreatorStore((state) => state.show);
   const toggleShow = useShowItemCreatorStore((state) => state.toggleShow);
@@ -26,6 +27,8 @@ const ItemCreator = () => {
   const setItemDate = useItemCreatorStore((state) => state.setItemDate);
 
   const shouldChange = useItemCreatorStore((state) => state.shouldChange);
+
+  //const refreshFunc = useRefresh((state) => state.refreshFunc);
   const toggleShouldChange = useItemCreatorStore(
     (state) => state.toggleShouldChange
   );

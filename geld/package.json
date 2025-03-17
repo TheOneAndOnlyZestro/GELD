@@ -11,6 +11,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "geld": "file:",
+    "interval-hooks": "^0.2.0",
     "next": "15.2.0",
     "pg": "^8.13.3",
     "react": "^19.0.0",
